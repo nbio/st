@@ -40,7 +40,8 @@ func TestExample(t *testing.T) {
 }
 ```
 
-See GoDoc at godoc.org/github.com/nbio/st for more detail.
+See [GoDoc](https://godoc.org/github.com/nbio/st) for more detail.
+[![GoDoc](https://godoc.org/github.com/nbio/st?status.png)](https://godoc.org/github.com/nbio/st)
 
 Run benchmarks to see example output:
 

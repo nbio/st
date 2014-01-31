@@ -1,6 +1,14 @@
 // Copyright 2014 nb.io, LLC
 // Author: Cameron Walters <cameron@nb.io>
 
+// Package st, pronounced "ghost", is a tiny test framework for
+// making short, useful assertions in your Go tests.
+//
+// To abort a test immediately with t.Fatal, use
+// Assert(t, actual, expected) and Refute(t, actual, expected)
+//
+// To allow a test to continue, reporting failure at the end with t.Error, use
+// Expect(t, actual, expected) and Reject(t, actual, expected)
 package st
 
 import (
