@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	equal   = "\n%s:%d: expected equality\n%s \twant (type %T): %+v\n\thave (type %T): %+v"
-	unequal = "\n%s:%d: expected inequality\n%s \twant (type %T): %+v\n\thave (type %T): %+v"
+	equal   = "\n%s:%d: actual should == expected\n%s \thave (%T): %+v\n\twant (%T): %+v"
+	unequal = "\n%s:%d: actual should != expected\n%s \thave (%T): %+v\n\tand  (%T): %+v"
 )
 
 // Expect calls t.Error and prints a nice comparison message when act != exp.
@@ -79,7 +79,7 @@ func caller() (file string, line int) {
 // provided.
 func exampleNum(n []int) string {
 	if len(n) == 1 {
-		return fmt.Sprintf("%d.", n[0]+1)
+		return fmt.Sprintf("%d.", n[0])
 	}
 	return ""
 }

@@ -84,34 +84,13 @@ func TestAssertRefute(t *testing.T) {
 	}
 }
 
-func TestExampleNum(t *testing.T) {
+func Test_exampleNum(t *testing.T) {
 	expectationFunc := func(t *testing.T, n ...int) []int {
 		return n
 	}
+
 	Expect(t, exampleNum(expectationFunc(t)), "")
-	Expect(t, exampleNum(expectationFunc(t, 0)), "1.")
-	Expect(t, exampleNum(expectationFunc(t, 1)), "2.")
-	Expect(t, exampleNum(expectationFunc(t, 2)), "3.")
-}
-
-// NOT A REAL BENCHMARK
-// Intended to demonstrate the output, including the correct line number, when a
-// test fails one or more expectations.
-func BenchmarkExpectationMessages(b *testing.B) {
-	Expect(b, 1, 2)
-	Refute(b, 1, 1)
-}
-
-// NOT A REAL BENCHMARK
-// Intended to demonstrate the output, including the correct line number, when a
-// test fails an assertion.
-func BenchmarkAssertMessage(b *testing.B) {
-	Assert(b, 1, 2)
-}
-
-// NOT A REAL BENCHMARK
-// Intended to demonstrate the output, including the correct line number, when a
-// test fails a refutation.
-func BenchmarkRefuteMessage(b *testing.B) {
-	Refute(b, 1, 1)
+	Expect(t, exampleNum(expectationFunc(t, 0)), "0.")
+	Expect(t, exampleNum(expectationFunc(t, 1)), "1.")
+	Expect(t, exampleNum(expectationFunc(t, 2)), "2.")
 }
