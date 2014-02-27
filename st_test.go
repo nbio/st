@@ -18,20 +18,26 @@ func Example_caller() {
 }
 
 type stTest struct{}
+type stTestInterface interface{}
 
 func TestExpectReject(t *testing.T) {
 	// Standard expectations
 	Expect(t, "a", "a")
 	Expect(t, 42, 42)
 	Expect(t, nil, nil)
+	Expect(t, stTestInterface(nil), nil)
 
 	// Standard rejections
 	Reject(t, "a", "A")
 	Reject(t, 42, int64(42.0))
 	Reject(t, 42, 42.0)
 	Reject(t, 42, "42")
+	Reject(t, stTest{}, nil)
 	Reject(t, []string{}, nil)
 	Reject(t, []stTest{}, nil)
+
+	var typedNil *stTest
+	Reject(t, typedNil, nil)
 
 	// Table-based test
 	examples := []struct{ a, b string }{

@@ -58,6 +58,8 @@ Failing tests produce nice output:
 func TestFailedExpectationMessages(t *testing.T) {
 	st.Expect(t, 1, 2)
 	st.Reject(t, "same", "same")
+	var typedNil *string
+	st.Expect(t, typedNil, nil) // in Go, a typed nil != nil
 }
 
 func TestFailedAssertMessage(t *testing.T) {
@@ -96,30 +98,35 @@ func TestFailedTableMessages(t *testing.T) {
 		readme_test.go:39: actual should != expected
 		 	have (string): same
 			and  (string): same
+	st.go:31:
+		readme_test.go:41: actual should == expected
+		 	have (<nil>): <nil>
+			want (*string): <nil>
 --- FAIL: TestFailedAssertMessage (0.00 seconds)
 	st.go:49:
-		readme_test.go:46: actual should == expected
+		readme_test.go:48: actual should == expected
 		 	have (readme.chicken): {}
 			want (readme.egg): {}
 --- FAIL: TestFailedRefuteMessage (0.00 seconds)
 	st.go:40:
-		readme_test.go:51: actual should != expected
+		readme_test.go:53: actual should != expected
 		 	have (int): 42
 			and  (int): 42
 --- FAIL: TestFailedTableMessages (0.00 seconds)
 	st.go:31:
-		readme_test.go:61: actual should == expected
+		readme_test.go:63: actual should == expected
 		0. 	have (int): 1
 			want (int): 0
 	st.go:31:
-		readme_test.go:61: actual should == expected
+		readme_test.go:63: actual should == expected
 		2. 	have (int): 1
 			want (int): 2
 	st.go:49:
-		readme_test.go:65: actual should == expected
+		readme_test.go:67: actual should == expected
 		 	have (int): 1
 			want (int): 0
 FAIL
+exit status 1
 FAIL	github.com/nbio/st/readme	0.010s
 ```
 

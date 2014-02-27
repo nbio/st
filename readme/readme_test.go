@@ -37,6 +37,8 @@ func TestTableExample(t *testing.T) {
 func TestFailedExpectationMessages(t *testing.T) {
 	st.Expect(t, 1, 2)
 	st.Reject(t, "same", "same")
+	var typedNil *string
+	st.Expect(t, typedNil, nil) // in Go, a typed nil != nil
 }
 
 // Prints failure output, including the correct line number.
