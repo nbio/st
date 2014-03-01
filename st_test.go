@@ -26,12 +26,14 @@ func TestExpectReject(t *testing.T) {
 	Expect(t, 42, 42)
 	Expect(t, nil, nil)
 	Expect(t, stTestInterface(nil), nil)
+	Expect(t, []int{42}, []int{42})
 
 	// Standard rejections
 	Reject(t, "a", "A")
 	Reject(t, 42, int64(42.0))
 	Reject(t, 42, 42.0)
 	Reject(t, 42, "42")
+	Reject(t, []int{42}, []int{41})
 	Reject(t, stTest{}, nil)
 	Reject(t, []string{}, nil)
 	Reject(t, []stTest{}, nil)
@@ -62,12 +64,14 @@ func TestAssertRefute(t *testing.T) {
 	Assert(t, "a", "a")
 	Assert(t, 42, 42)
 	Assert(t, nil, nil)
+	Assert(t, []int{42}, []int{42})
 
 	// Standard refutations
 	Refute(t, "a", "A")
 	Refute(t, 42, int64(42.0))
 	Refute(t, 42, 42.0)
 	Refute(t, 42, "42")
+	Refute(t, []int{42}, []int{41})
 	Refute(t, []string{}, nil)
 	Refute(t, []stTest{}, nil)
 
