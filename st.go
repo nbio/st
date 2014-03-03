@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	equal   = "\n%s:%d: actual should == expected\n%s \thave (%T): %+v\n\twant (%T): %+v"
-	unequal = "\n%s:%d: actual should != expected\n%s \thave (%T): %+v\n\tand  (%T): %+v"
+	equal   = "\n%s:%d: actual should == expected\n%s \thave: (%T) %+v\n\twant: (%T) %+v"
+	unequal = "\n%s:%d: actual should != expected\n%s \thave: (%T) %+v\n\tand : (%T) %+v"
 )
 
 // Expect calls t.Error and prints a nice comparison message when act != exp.
