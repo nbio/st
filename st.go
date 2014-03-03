@@ -15,7 +15,6 @@ import (
 	"fmt"
 	"runtime"
 	"strings"
-	"testing"
 )
 
 const (
@@ -23,9 +22,19 @@ const (
 	unequal = "\n%s:%d: actual should != expected\n%s \thave: (%T) %+v\n\tand : (%T) %+v"
 )
 
+// Errorf is satisfied by testing.T and many other types.
+type Errorf interface {
+	Errorf(format string, args ...interface{})
+}
+
+// Fatalf is satisfied by testing.T and many other types.
+type Fatalf interface {
+	Fatalf(format string, args ...interface{})
+}
+
 // Expect calls t.Error and prints a nice comparison message when act != exp.
 // Especially useful in table-based tests when passing the loop index as iter.
-func Expect(t testing.TB, act interface{}, exp interface{}, iter ...int) {
+func Expect(t Errorf, act, exp interface{}, iter ...int) {
 	if act != exp {
 		file, line := caller()
 		t.Errorf(equal, file, line, exampleNum(iter), exp, exp, act, act)
@@ -34,7 +43,7 @@ func Expect(t testing.TB, act interface{}, exp interface{}, iter ...int) {
 
 // Reject calls t.Error and prints a nice comparison message when act == exp.
 // Especially useful in table-based tests when passing the loop index as iter.
-func Reject(t testing.TB, act interface{}, exp interface{}, iter ...int) {
+func Reject(t Errorf, act, exp interface{}, iter ...int) {
 	if act == exp {
 		file, line := caller()
 		t.Errorf(unequal, file, line, exampleNum(iter), exp, exp, act, act)
@@ -43,7 +52,7 @@ func Reject(t testing.TB, act interface{}, exp interface{}, iter ...int) {
 
 // Assert calls t.Fatal to abort the test immediately and prints a nice
 // comparison message when act != exp.
-func Assert(t testing.TB, act interface{}, exp interface{}) {
+func Assert(t Fatalf, act, exp interface{}) {
 	if act != exp {
 		file, line := caller()
 		t.Fatalf(equal, file, line, "", exp, exp, act, act)
@@ -52,7 +61,7 @@ func Assert(t testing.TB, act interface{}, exp interface{}) {
 
 // Refute calls t.Fatal to abort the test immediately and prints a nice
 // comparison message when act != exp.
-func Refute(t testing.TB, act interface{}, exp interface{}) {
+func Refute(t Fatalf, act, exp interface{}) {
 	if act == exp {
 		file, line := caller()
 		t.Fatalf(unequal, file, line, "", exp, exp, act, act)
