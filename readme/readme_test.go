@@ -35,6 +35,7 @@ func TestTableExample(t *testing.T) {
 
 // Prints failure output, including the correct line number.
 func TestFailedExpectationMessages(t *testing.T) {
+	t.Log("Tests purposely fail to demonstrate output")
 	st.Expect(t, 1, 2)
 	st.Reject(t, "same", "same")
 	var typedNil *string
@@ -66,4 +67,23 @@ func TestFailedTableMessages(t *testing.T) {
 	for _, example := range table {
 		st.Assert(t, example.val, 1)
 	}
+}
+
+// Allows comparing non-comparable types to prevent panics when comparing slices
+// or maps.
+func TestDeeperEquality(t *testing.T) {
+	type testStr string
+	slice1 := []interface{}{"A", 1, []byte("steak sauce")}
+	slice2 := []interface{}{"R", 2, 'd', int64(2)}
+	map1 := map[string]string{"clever": "crafty", "modest": "prim"}
+	map2 := map[string]string{"silk": "scarf", "wool": "sweater"}
+	str1 := "same"
+	str2 := testStr("same")
+
+	st.Expect(t, slice1, slice2)
+	st.Reject(t, slice1, slice1)
+	st.Expect(t, map1, map2)
+	st.Reject(t, map1, map1)
+	st.Expect(t, str1, str2)
+	st.Reject(t, str1, str1)
 }

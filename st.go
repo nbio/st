@@ -13,9 +13,9 @@ package st
 
 import (
 	"fmt"
+	"reflect"
 	"runtime"
 	"strings"
-	"reflect"
 )
 
 const (
