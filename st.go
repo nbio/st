@@ -5,10 +5,10 @@
 // making short, useful assertions in your Go tests.
 //
 // To abort a test immediately with t.Fatal, use
-// Assert(t, actual, expected) and Refute(t, actual, expected)
+// Assert(t, have, want) and Refute(t, have, want)
 //
 // To allow a test to continue, reporting failure at the end with t.Error, use
-// Expect(t, actual, expected) and Reject(t, actual, expected)
+// Expect(t, have, want) and Reject(t, have, want)
 package st
 
 import (
@@ -19,53 +19,53 @@ import (
 )
 
 const (
-	equal   = "\n%s:%d: actual should == expected\n%s \thave: (%T) %+v\n\twant: (%T) %+v"
-	unequal = "\n%s:%d: actual should != expected\n%s \thave: (%T) %+v\n\tand : (%T) %+v"
+	equal   = "\n%s:%d: should be == \n%s \thave: (%T) %+v\n\twant: (%T) %+v"
+	unequal = "\n%s:%d: should be != \n%s \thave: (%T) %+v\n\tand : (%T) %+v"
 )
 
-// Errorf is satisfied by testing.T and many other types.
+// Errorf is satisfied by testing.T and testing.B.
 type Errorf interface {
 	Errorf(format string, args ...interface{})
 }
 
-// Fatalf is satisfied by testing.T and many other types.
+// Fatalf is satisfied by testing.T and testing.B.
 type Fatalf interface {
 	Fatalf(format string, args ...interface{})
 }
 
-// Expect calls t.Error and prints a nice comparison message when act != exp.
+// Expect calls t.Error and prints a nice comparison message when have != want.
 // Especially useful in table-based tests when passing the loop index as iter.
-func Expect(t Errorf, act, exp interface{}, iter ...int) {
-	if !reflect.DeepEqual(act, exp) {
+func Expect(t Errorf, have, want interface{}, iter ...int) {
+	if !reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Errorf(equal, file, line, exampleNum(iter), exp, exp, act, act)
+		t.Errorf(equal, file, line, exampleNum(iter), want, want, have, have)
 	}
 }
 
-// Reject calls t.Error and prints a nice comparison message when act == exp.
+// Reject calls t.Error and prints a nice comparison message when have == want.
 // Especially useful in table-based tests when passing the loop index as iter.
-func Reject(t Errorf, act, exp interface{}, iter ...int) {
-	if reflect.DeepEqual(act, exp) {
+func Reject(t Errorf, have, want interface{}, iter ...int) {
+	if reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Errorf(unequal, file, line, exampleNum(iter), exp, exp, act, act)
+		t.Errorf(unequal, file, line, exampleNum(iter), want, want, have, have)
 	}
 }
 
 // Assert calls t.Fatal to abort the test immediately and prints a nice
-// comparison message when act != exp.
-func Assert(t Fatalf, act, exp interface{}) {
-	if !reflect.DeepEqual(act, exp) {
+// comparison message when have != want.
+func Assert(t Fatalf, have, want interface{}) {
+	if !reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Fatalf(equal, file, line, "", exp, exp, act, act)
+		t.Fatalf(equal, file, line, "", want, want, have, have)
 	}
 }
 
 // Refute calls t.Fatal to abort the test immediately and prints a nice
-// comparison message when act != exp.
-func Refute(t Fatalf, act, exp interface{}) {
-	if reflect.DeepEqual(act, exp) {
+// comparison message when have != want.
+func Refute(t Fatalf, have, want interface{}) {
+	if reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Fatalf(unequal, file, line, "", exp, exp, act, act)
+		t.Fatalf(unequal, file, line, "", want, want, have, have)
 	}
 }
 

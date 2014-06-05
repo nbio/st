@@ -1,14 +1,14 @@
-## A Simple Test micro-framework for Go
+## A Tiny Test Framework for Go
 
 [![GoDoc](https://godoc.org/github.com/nbio/st?status.png)](https://godoc.org/github.com/nbio/st)
 
 A tiny test framework for making short, useful assertions in your Go tests.
 
-`Assert(t, actual, expected)` and `Refute(t, actual, expected)` abort a test immediately with `t.Fatal`.
+`Assert(t, have, want)` and `Refute(t, have, want)` abort a test immediately with `t.Fatal`.
 
-`Expect(t, actual, expected)` and `Reject(t, actual, expected)` allow a test to continue, reporting failure at the end with `t.Error`.
+`Expect(t, have, want)` and `Reject(t, have, want)` allow a test to continue, reporting failure at the end with `t.Error`.
 
-They print nice error messages, preserving the order of actual == expected to minimize confusion.
+They print nice error messages, preserving the order of have (actual result) before want (expected result) to minimize confusion.
 
 ### Usage
 
@@ -108,63 +108,63 @@ func TestDeeperEquality(t *testing.T) {
 --- FAIL: TestFailedExpectationMessages (0.00 seconds)
 	readme_test.go:38: Tests purposely fail to demonstrate output
 	st.go:41:
-		readme_test.go:39: actual should == expected
+		readme_test.go:39: should be ==
 		 	have: (int) 2
 			want: (int) 1
 	st.go:50:
-		readme_test.go:40: actual should != expected
+		readme_test.go:40: should be !=
 		 	have: (string) same
 			and : (string) same
 	st.go:41:
-		readme_test.go:42: actual should == expected
+		readme_test.go:42: should be ==
 		 	have: (<nil>) <nil>
 			want: (*string) <nil>
 --- FAIL: TestFailedAssertMessage (0.00 seconds)
 	st.go:59:
-		readme_test.go:49: actual should == expected
+		readme_test.go:49: should be ==
 		 	have: (readme.chicken) {}
 			want: (readme.egg) {}
 --- FAIL: TestFailedRefuteMessage (0.00 seconds)
 	st.go:50:
-		readme_test.go:54: actual should != expected
+		readme_test.go:54: should be !=
 		 	have: (int) 42
 			and : (int) 42
 --- FAIL: TestFailedTableMessages (0.00 seconds)
 	st.go:41:
-		readme_test.go:64: actual should == expected
+		readme_test.go:64: should be ==
 		0. 	have: (int) 1
 			want: (int) 0
 	st.go:41:
-		readme_test.go:64: actual should == expected
+		readme_test.go:64: should be ==
 		2. 	have: (int) 1
 			want: (int) 2
 	st.go:59:
-		readme_test.go:68: actual should == expected
+		readme_test.go:68: should be ==
 		 	have: (int) 1
 			want: (int) 0
 --- FAIL: TestDeeperEquality (0.00 seconds)
 	st.go:41:
-		readme_test.go:83: actual should == expected
+		readme_test.go:83: should be ==
 		 	have: ([]interface {}) [R 2 100 2]
 			want: ([]interface {}) [A 1 [115 116 101 97 107 32 115 97 117 99 101]]
 	st.go:50:
-		readme_test.go:84: actual should != expected
+		readme_test.go:84: should be !=
 		 	have: ([]interface {}) [A 1 [115 116 101 97 107 32 115 97 117 99 101]]
 			and : ([]interface {}) [A 1 [115 116 101 97 107 32 115 97 117 99 101]]
 	st.go:41:
-		readme_test.go:85: actual should == expected
+		readme_test.go:85: should be ==
 		 	have: (map[string]string) map[silk:scarf wool:sweater]
 			want: (map[string]string) map[clever:crafty modest:prim]
 	st.go:50:
-		readme_test.go:86: actual should != expected
+		readme_test.go:86: should be !=
 		 	have: (map[string]string) map[clever:crafty modest:prim]
 			and : (map[string]string) map[clever:crafty modest:prim]
 	st.go:41:
-		readme_test.go:87: actual should == expected
+		readme_test.go:87: should be ==
 		 	have: (readme.testStr) same
 			want: (string) same
 	st.go:50:
-		readme_test.go:88: actual should != expected
+		readme_test.go:88: should be !=
 		 	have: (string) same
 			and : (string) same
 FAIL
