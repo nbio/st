@@ -38,7 +38,7 @@ type Fatalf interface {
 func Expect(t Errorf, have, want interface{}, iter ...int) {
 	if !reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Errorf(equal, file, line, exampleNum(iter), want, want, have, have)
+		t.Errorf(equal, file, line, exampleNum(iter), have, have, want, want)
 	}
 }
 
@@ -47,7 +47,7 @@ func Expect(t Errorf, have, want interface{}, iter ...int) {
 func Reject(t Errorf, have, want interface{}, iter ...int) {
 	if reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Errorf(unequal, file, line, exampleNum(iter), want, want, have, have)
+		t.Errorf(unequal, file, line, exampleNum(iter), have, have, want, want)
 	}
 }
 
@@ -56,7 +56,7 @@ func Reject(t Errorf, have, want interface{}, iter ...int) {
 func Assert(t Fatalf, have, want interface{}) {
 	if !reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Fatalf(equal, file, line, "", want, want, have, have)
+		t.Fatalf(equal, file, line, "", have, have, want, want)
 	}
 }
 
@@ -65,7 +65,7 @@ func Assert(t Fatalf, have, want interface{}) {
 func Refute(t Fatalf, have, want interface{}) {
 	if reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Fatalf(unequal, file, line, "", want, want, have, have)
+		t.Fatalf(unequal, file, line, "", have, have, want, want)
 	}
 }
 
