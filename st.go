@@ -53,19 +53,19 @@ func Reject(t Errorf, have, want interface{}, iter ...int) {
 
 // Assert calls t.Fatal to abort the test immediately and prints a nice
 // comparison message when have != want.
-func Assert(t Fatalf, have, want interface{}) {
+func Assert(t Fatalf, have, want interface{}, iter ...int) {
 	if !reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Fatalf(equal, file, line, "", have, have, want, want)
+		t.Fatalf(equal, file, line, exampleNum(iter), have, have, want, want)
 	}
 }
 
 // Refute calls t.Fatal to abort the test immediately and prints a nice
 // comparison message when have != want.
-func Refute(t Fatalf, have, want interface{}) {
+func Refute(t Fatalf, have, want interface{}, iter ...int) {
 	if reflect.DeepEqual(have, want) {
 		file, line := caller()
-		t.Fatalf(unequal, file, line, "", have, have, want, want)
+		t.Fatalf(unequal, file, line, exampleNum(iter), have, have, want, want)
 	}
 }
 
