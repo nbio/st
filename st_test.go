@@ -5,6 +5,7 @@ package st
 
 import (
 	"fmt"
+	"net/http"
 	"testing"
 )
 
@@ -103,4 +104,20 @@ func Test_exampleNum(t *testing.T) {
 	Expect(t, exampleNum(expectationFunc(t, 0)), "0.")
 	Expect(t, exampleNum(expectationFunc(t, 1)), "1.")
 	Expect(t, exampleNum(expectationFunc(t, 2)), "2.")
+}
+
+func ExampleAssert_usingIterator() {
+	t := new(testing.T)
+
+	examples := []string{
+		"http://localhost:3000/foo",
+		"http://localhost:3000/bar",
+	}
+
+	for i, example := range examples {
+		res, err := http.Get(example)
+
+		Assert(t, err, nil, i)
+		Expect(t, res.StatusCode, http.StatusUnauthorized, i)
+	}
 }
